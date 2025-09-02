@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from controllers.user_controller import user_bp
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, create_refresh_token
@@ -47,12 +48,14 @@ class UserService:
         new_user = User(username=username, email=email, password=hashed_pw)
         self.db.session.add(new_user)
         self.db.session.commit()
+        self.db.session.commit()
         return new_user
 
     def get_user_by_email(self, email):
         return User.query.filter_by(email=email).first()
 
     def get_user_by_id(self, user_id):
+
         return User.query.get(user_id)
 
     def update_user(self, user, data):
